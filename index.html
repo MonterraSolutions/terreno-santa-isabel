@@ -39,13 +39,13 @@
 }
 html,body{height:100%}
 [hidden]{display:none!important}
-body{margin:0;background:var(--sky);color:var(--ink);font-family:var(--f-body);font-size:15px;overflow:hidden;-webkit-font-smoothing:antialiased}
-#scene{position:fixed;inset:0;display:block;width:100%;height:100%;touch-action:none;outline:none}
-.ui{position:fixed;z-index:5}
+body{margin:0;background:var(--panel-solid);color:var(--ink);font-family:var(--f-body);font-size:15px;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+#visor{position:relative;height:100vh;height:100svh;overflow:hidden;background:var(--sky)}
+#scene{position:absolute;inset:0;display:block;width:100%;height:100%;touch-action:none;outline:none}
+.ui{position:absolute;z-index:5}
 .glass{background:var(--panel);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid var(--line);border-radius:14px}
 
 /* Ficha */
-#ficha:not(.abierta) .detalle{display:none}
 #ficha{top:calc(16px + env(safe-area-inset-top,0px));left:16px;width:min(330px,calc(100vw - 32px));padding:16px 18px 14px;display:flex;flex-direction:column;gap:10px}
 .eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--stake)}
 h1{font-family:var(--f-display);font-weight:700;font-size:30px;line-height:1.02;margin:0;text-wrap:balance;letter-spacing:-.01em}
@@ -104,7 +104,7 @@ h1 small{display:block;font-size:15px;font-weight:500;color:var(--ink-2);letter-
 #ayuda{right:16px;top:calc(16px + env(safe-area-inset-top,0px));padding:8px 12px;font-size:12.5px;color:var(--ink-2);transition:opacity .6s}
 
 /* Etiquetas sobre la escena */
-#labels{position:fixed;inset:0;pointer-events:none;z-index:3;overflow:hidden}
+#labels{position:absolute;inset:0;pointer-events:none;z-index:3;overflow:hidden}
 .tag{position:absolute;left:0;top:0;transform:translate(-50%,-100%);white-space:nowrap;will-change:transform}
 .tag-lote{background:var(--stake);color:var(--stake-ink);border-radius:8px;padding:6px 10px 7px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,.25)}
 .tag-lote b{display:block;font-family:var(--f-display);font-size:17px;line-height:1.05}
@@ -120,7 +120,7 @@ h1 small{display:block;font-size:15px;font-weight:500;color:var(--ink-2);letter-
 .pin:hover{background:var(--stake)}
 
 /* Hoja de foto */
-#foto{left:50%;top:50%;transform:translate(-50%,-50%);width:min(720px,calc(100vw - 32px));padding:10px;display:flex;flex-direction:column;gap:10px;z-index:8}
+#foto{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(720px,calc(100vw - 32px));padding:10px;display:flex;flex-direction:column;gap:10px;z-index:8}
 #foto img{width:100%;max-height:60vh;object-fit:contain;border-radius:8px;background:#000;display:block}
 #foto .row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:0 6px 4px}
 #foto p{margin:0;font-size:14px;line-height:1.4}
@@ -179,8 +179,40 @@ h1 small{display:block;font-size:15px;font-weight:500;color:var(--ink-2);letter-
   .vc-txt b{font-size:13px}
 }
 @media (prefers-reduced-motion:reduce){.vc-play{animation:none;transition:none}}
+
+#detalles{background:var(--panel-solid);color:var(--ink);padding-block:28px 32px;padding-inline:16px}
+.det-in{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.det-cab{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:14px}
+.det-cab h2{font-family:var(--f-display);font-weight:700;font-size:24px;line-height:1.15;margin:4px 0 0;text-wrap:balance}
+.volver{display:inline-flex;align-items:center;gap:7px;background:transparent;border:1px solid var(--line);color:var(--ink);font:500 13px var(--f-body);padding:8px 13px;border-radius:999px;cursor:pointer}
+.volver:hover{background:rgba(243,241,234,.08)}
+.det-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.det-col{display:flex;flex-direction:column;gap:9px;min-width:0}
+.det-col h3{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--stake);margin:0}
+#detalles .feat{font-size:13.5px;gap:8px}
+#detalles .medidas dl{margin:0;font-size:13px}
+#detalles .leyenda{border:0;padding:0;font-size:12.5px}
+#detalles .nota{margin-top:4px}
+.det-pie{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px}
+.wa-ancho{flex:0 1 380px}
+@media (max-width:760px){
+  #detalles{padding-block:18px 22px}
+  .det-in{gap:12px}
+  .det-cab{padding-bottom:10px;align-items:center}
+  .det-cab h2{font-size:17px}
+  .volver{padding:6px 11px;font-size:12px}
+  .det-grid{grid-template-columns:1fr;gap:13px}
+  .det-col{gap:6px}
+  #detalles .feat{font-size:12.5px;gap:5px}
+  #detalles .medidas dl{font-size:12px;gap:2px 10px}
+  #detalles .leyenda{font-size:11.5px;gap:4px}
+  #detalles .nota{font-size:10.5px}
+  .det-pie{padding-top:12px;gap:10px}
+  .wa-ancho{flex:1 1 100%}
+}
 </style>
 
+<main id="visor">
 </head>
 <body>
 <canvas id="scene" tabindex="0" aria-label="Modelo 3D del terreno. Arrastra para girar, pellizca o usa la rueda para acercar."></canvas>
@@ -192,36 +224,8 @@ h1 small{display:block;font-size:15px;font-weight:500;color:var(--ink-2);letter-
   <div class="area"><b>937.95</b><span>m²</span></div>
   <a class="wa" id="wa" href="https://wa.me/528114646344" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 2.9 2.9 0 0 0-.9 2.2 5.1 5.1 0 0 0 1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.7a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3z"/></svg><span>Informes por WhatsApp</span><b>81 1464 6344</b></a>
   <div class="pie-ficha">
-    <button id="toggleFicha" type="button" aria-expanded="false">Ver detalles ▾</button>
+    <button id="toggleFicha" type="button" aria-controls="detalles">Ver detalles ▾</button>
     <a class="credito" href="https://monterra-solutions.com" target="_blank" rel="noopener">Powered by <b>Monterra Solutions</b></a>
-  </div>
-  <div class="detalle">
-    <ul class="feat">
-      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1 13l4.5-6 3 3.5L11 7l4 6H1z" fill="#ef7a2c"/></svg>Vistas panorámicas a la sierra y a la ciudad</li>
-      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1 11.5h14M1 8.5h14" stroke="#ef7a2c" stroke-width="2"/></svg>Terreno regular, con poco desnivel</li>
-      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#ef7a2c" stroke-width="2"/><path d="M6 2v12" stroke="#ef7a2c" stroke-width="2" stroke-dasharray="2 2"/></svg>De esquina a esquina: colinda con un solo terreno</li>
-      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1l6 2.5v4C14 11 11.5 14 8 15 4.5 14 2 11 2 7.5v-4z" stroke="#ef7a2c" stroke-width="2"/></svg>Caseta 24/7, casa club, alberca semiolímpica, canchas y asadores</li>
-    </ul>
-    <div class="precio" id="bloquePrecio" hidden>
-      <div><div class="eyebrow" style="color:var(--ink-2)">Precio</div><b id="precio"></b></div>
-      <a class="cta" id="whats" href="#" target="_blank" rel="noopener">Pedir informes</a>
-    </div>
-    <div class="medidas">
-      <div class="eyebrow" style="color:var(--ink-2)">Medidas del plano</div>
-      <dl>
-        <dt>Noreste · calle De la Asunción</dt><dd>27.429 m</dd>
-        <dt>Sureste · lote 5</dt><dd>39.679 m</dd>
-        <dt>Suroeste · calle Del Seminario</dt><dd>15.689 + 8.229 m</dd>
-        <dt>Noroeste · Calzada Santa Isabel</dt><dd>35.829 m</dd>
-        <dt>Superficie</dt><dd>937.949 m²</dd>
-      </dl>
-    </div>
-    <div class="leyenda">
-      <div><i style="background:var(--stake);height:3px"></i>Cerca naranja: límite del terreno</div>
-      <div><i style="background:var(--stake);clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%)"></i>Flecha: hacia dónde sube</div>
-      <div><i style="background:#fffaeb;height:2px"></i>Líneas blancas: cada metro de subida</div>
-    </div>
-    <p class="nota">Forma y medidas tomadas del plano de lotificación (Mz 45, Lote 04, esc. 1:250). El relieve y lo que rodea al terreno son ilustrativos.</p>
   </div>
 </section>
 
@@ -245,6 +249,54 @@ h1 small{display:block;font-size:15px;font-weight:500;color:var(--ink-2);letter-
   <button type="button" data-vista="recorrido" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 8A5.5 5.5 0 1 1 8 2.5" stroke="currentColor" stroke-width="1.5"/><path d="M8 0v5l3-2.5z" fill="currentColor"/></svg>Recorrido</button>
 </nav>
 </div>
+
+</main>
+
+<section id="detalles" aria-labelledby="detTitulo">
+  <div class="det-in">
+    <header class="det-cab">
+      <div><div class="eyebrow">Detalles · Lote 4 · Manzana 45</div><h2 id="detTitulo">937.95 m² con 3 frentes en Santa Isabel, El Barro</h2></div>
+      <button id="volver" class="volver" type="button"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 8l4-4 4 4" stroke="currentColor" stroke-width="2" fill="none"/></svg>Volver a la maqueta</button>
+    </header>
+    <div class="det-grid">
+      <div class="det-col"><h3>Características</h3>
+    <ul class="feat">
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1 13l4.5-6 3 3.5L11 7l4 6H1z" fill="#ef7a2c"/></svg>Vistas panorámicas a la sierra y a la ciudad</li>
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M1 11.5h14M1 8.5h14" stroke="#ef7a2c" stroke-width="2"/></svg>Terreno regular, con poco desnivel</li>
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="2" y="2" width="12" height="12" rx="1" stroke="#ef7a2c" stroke-width="2"/><path d="M6 2v12" stroke="#ef7a2c" stroke-width="2" stroke-dasharray="2 2"/></svg>De esquina a esquina: colinda con un solo terreno</li>
+      <li><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1l6 2.5v4C14 11 11.5 14 8 15 4.5 14 2 11 2 7.5v-4z" stroke="#ef7a2c" stroke-width="2"/></svg>Caseta 24/7, casa club, alberca semiolímpica, canchas y asadores</li>
+    </ul>
+      </div>
+    <div class="det-col medidas">
+      <h3>Medidas del plano</h3>
+      <dl>
+        <dt>Noreste · calle De la Asunción</dt><dd>27.429 m</dd>
+        <dt>Sureste · lote 5</dt><dd>39.679 m</dd>
+        <dt>Suroeste · calle Del Seminario</dt><dd>15.689 + 8.229 m</dd>
+        <dt>Noroeste · Calzada Santa Isabel</dt><dd>35.829 m</dd>
+        <dt>Superficie</dt><dd>937.949 m²</dd>
+      </dl>
+    </div>
+
+      <div class="det-col"><h3>Cómo leer la maqueta</h3>
+    <div class="leyenda">
+      <div><i style="background:var(--stake);height:3px"></i>Cerca naranja: límite del terreno</div>
+      <div><i style="background:var(--stake);clip-path:polygon(0 30%,60% 30%,60% 0,100% 50%,60% 100%,60% 70%,0 70%)"></i>Flecha: hacia dónde sube</div>
+      <div><i style="background:#fffaeb;height:2px"></i>Líneas blancas: cada metro de subida</div>
+    </div>
+    <p class="nota">Forma y medidas tomadas del plano de lotificación (Mz 45, Lote 04, esc. 1:250). El relieve y lo que rodea al terreno son ilustrativos.</p>
+      </div>
+    </div>
+    <div class="precio" id="bloquePrecio" hidden>
+      <div><div class="eyebrow" style="color:var(--ink-2)">Precio</div><b id="precio"></b></div>
+      <a class="cta" id="whats" href="#" target="_blank" rel="noopener">Pedir informes</a>
+    </div>
+    <div class="det-pie">
+      <a class="wa wa-ancho" href="https://wa.me/528114646344" target="_blank" rel="noopener" data-wa><span>Informes por WhatsApp</span><b>81 1464 6344</b></a>
+      <a class="credito" href="https://monterra-solutions.com" target="_blank" rel="noopener">Powered by <b>Monterra Solutions</b></a>
+    </div>
+  </div>
+</section>
 
 <div id="velo" hidden></div>
 <figure id="foto" class="ui glass" hidden role="dialog" aria-modal="true" aria-label="Foto del terreno" style="margin:0">
@@ -585,7 +637,7 @@ function etiqueta(html,clase,p,alto,el){const d=el||document.createElement("div"
 FOTOS.forEach((f,i)=>{const b=document.createElement("button");b.type="button";b.className="thumb";b.setAttribute("aria-current","false");
   b.innerHTML='<img src="'+(f.poster||f.src)+'" alt="">'+(f.tipo==="video"?'<i class="play"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.5v9l7.5-4.5z" fill="currentColor"/></svg></i>':'')+'<span>'+f.c+'</span>';b.addEventListener("click",()=>abrirFoto(i,true));$("#tira").appendChild(b)});
 const vtmp=new THREE.Vector3();
-function moverEtiquetas(){const w=innerWidth,h=innerHeight;
+function moverEtiquetas(){const w=VW,h=VH;
   for(const e of etiquetas){vtmp.copy(e.v).project(camera);const fuera=vtmp.z>1||vtmp.x<-1.2||vtmp.x>1.2||vtmp.y<-1.2||vtmp.y>1.2;
     if(fuera){e.el.style.display="none";continue}e.el.style.display="";
     const d=camera.position.distanceTo(e.v);e.el.style.opacity=d>420?0:1;
@@ -639,12 +691,15 @@ $("#mapa").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComp
 $("#wa").href="https://wa.me/528114646344?text="+encodeURIComponent("Hola, me interesa el terreno de 937.95 m² en Santa Isabel, El Barro (Lote 4, Mz 45).");
 {const iv=FOTOS.findIndex(f=>f.tipo==="video");if(iv>=0){$("#videoCard").hidden=false;$("#vcPoster").src=FOTOS[iv].poster;$("#videoCard").onclick=()=>abrirFoto(iv)}}
 $("#tiraIzq").onclick=()=>$("#tira").scrollBy({left:-300});$("#tiraDer").onclick=()=>$("#tira").scrollBy({left:300});
-$("#toggleFicha").onclick=()=>{const f=$("#ficha"),ab=f.classList.toggle("abierta");$("#toggleFicha").setAttribute("aria-expanded",ab);$("#toggleFicha").textContent=ab?"Ocultar detalles ▴":"Ver detalles ▾"};
+$("#toggleFicha").onclick=()=>$("#detalles").scrollIntoView({behavior:reduce?"auto":"smooth"});
+$("#volver").onclick=()=>$("#visor").scrollIntoView({behavior:reduce?"auto":"smooth"});
+document.querySelectorAll("[data-wa]").forEach(a=>a.href=$("#wa").href);
 if(VENTA.precio||VENTA.whatsapp){$("#bloquePrecio").hidden=false;$("#precio").textContent=VENTA.precio||"Consultar";
   if(VENTA.whatsapp)$("#whats").href="https://wa.me/"+VENTA.whatsapp+"?text="+encodeURIComponent("Hola, me interesa el terreno de 937.95 m² en Santa Isabel (Lote 4, Mz 45).");else $("#whats").hidden=true}
 
 /* ===== Bucle ===== */
-function tam(){const w=innerWidth,h=innerHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<640?50:45;camera.updateProjectionMatrix()}
+let VW=innerWidth,VH=innerHeight;
+function tam(){const v=$("#visor"),w=VW=v.clientWidth,h=VH=v.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.fov=w<640?50:45;camera.updateProjectionMatrix()}
 addEventListener("resize",tam);tam();
 const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
 // entrada: desde lo alto hacia la vista general
