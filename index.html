@@ -710,15 +710,16 @@ addEventListener("keydown",e=>{if($("#foto").hidden)return;if(e.key==="Escape")c
 
 /* ===== Ficha en celular y datos de venta ===== */
 $("#mapa").href="https://www.google.com/maps/search/?api=1&query="+encodeURIComponent("Santa Isabel, El Barro, Carretera Nacional, Monterrey, N.L.");
-$("#wa").href="https://wa.me/528114646344?text="+encodeURIComponent("Hola, me interesa el terreno de 937.95 m² en Santa Isabel, El Barro (Lote 4, Mz 45).");
+const WA_URL="https://wa.me/528114646344?text="+encodeURIComponent("Hola, me interesa el terreno de 937.95 m² en Santa Isabel, El Barro (Lote 4, Mz 45).");
+if($("#wa"))$("#wa").href=WA_URL;
 {const iv=FOTOS.findIndex(f=>f.tipo==="video");if(iv>=0){$("#videoCard").hidden=false;$("#vcPoster").src=FOTOS[iv].poster;$("#videoCard").onclick=()=>abrirFoto(iv)}}
 $("#tiraIzq").onclick=()=>$("#tira").scrollBy({left:-300});$("#tiraDer").onclick=()=>$("#tira").scrollBy({left:300});
 {const f=$("#ficha"),poner=m=>{f.classList.toggle("mini",m);$("#minFicha").setAttribute("aria-expanded",String(!m));$("#videoCard").classList.toggle("oculta",m)};
  $("#minFicha").onclick=()=>poner(true);$("#maxFicha").onclick=$("#maxFicha2").onclick=()=>poner(false);
- $("#waMini").href=$("#wa").href;}
+ if($("#waMini"))$("#waMini").href=WA_URL;}
 $("#toggleFicha").onclick=()=>$("#detalles").scrollIntoView({behavior:reduce?"auto":"smooth"});
 $("#volver").onclick=()=>$("#visor").scrollIntoView({behavior:reduce?"auto":"smooth"});
-document.querySelectorAll("[data-wa]").forEach(a=>a.href=$("#wa").href);
+document.querySelectorAll("[data-wa]").forEach(a=>a.href=WA_URL);
 if(VENTA.precio||VENTA.whatsapp){$("#bloquePrecio").hidden=false;$("#precio").textContent=VENTA.precio||"Consultar";
   if(VENTA.whatsapp)$("#whats").href="https://wa.me/"+VENTA.whatsapp+"?text="+encodeURIComponent("Hola, me interesa el terreno de 937.95 m² en Santa Isabel (Lote 4, Mz 45).");else $("#whats").hidden=true}
 
